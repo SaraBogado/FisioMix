@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FisioMix – Centro de Rehabilitación | Lic. Amílcar Cano</title>
+  <meta name="description" content="FisioMix Centro de Rehabilitación en San Juan Nepomuceno. Fisioterapia deportiva, geriátrica, neurológica y más. Lic. Amílcar Cano – Reg. Nº 6722." />
+  <meta name="keywords" content="fisioterapia, rehabilitación, fisioterapia deportiva, San Juan Nepomuceno, FisioMix" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --blue-dark: #1a4a7c;
+      --blue: #2271b8;
+      --blue-light: #4fa3e0;
+      --blue-pale: #dceefb;
+      --green-dark: #2d8a4e;
+      --green: #3cb371;
+      --green-light: #6dca8d;
+      --green-pale: #d4f0e0;
+      --white: #ffffff;
+      --off-white: #f7fbff;
+      --gray-light: #f0f4f8;
+      --gray: #8899aa;
+      --text: #1c2b3a;
+      --text-light: #4a6080;
+      --shadow: 0 8px 32px rgba(26,74,124,0.12);
+      --shadow-lg: 0 20px 60px rgba(26,74,124,0.18);
+      --radius: 16px;
+      --radius-lg: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--green));
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loader.hide { opacity: 0; visibility: hidden; }
+    .loader-logo { width: 90px; animation: loaderPulse 1.2s ease-in-out infinite; }
+    .loader-text {
+      margin-top: 20px; color: white; font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase; opacity: 0.9;
+    }
+    .loader-dots { display: flex; gap: 8px; margin-top: 16px; }
+    .loader-dots span {
+      width: 8px; height: 8px; background: white; border-radius: 50%;
+      animation: dotBounce 1.2s ease-in-out infinite;
+    }
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes loaderPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.08);opacity:0.8} }
+    @keyframes dotBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 14px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(34,113,184,0.1);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(26,74,124,0.15); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-brand span:first-child {
+      font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-brand span:last-child { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-light);
+      transition: color 0.3s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: white !important; padding: 10px 22px; border-radius: 30px;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 16px rgba(34,113,184,0.35);
+      transition: transform 0.3s, box-shadow 0.3s !important;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,113,184,0.45) !important; }
+    .nav-cta::after { display: none !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span { width: 25px; height: 2.5px; background: var(--blue); border-radius: 2px; transition: all 0.3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: 76px; left: 0; right: 0;
+      background: white; padding: 20px 5%; border-bottom: 1px solid var(--blue-pale);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1); z-index: 999;
+    }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 0; }
+    .mobile-menu a {
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      color: var(--text); padding: 14px 0; border-bottom: 1px solid var(--gray-light);
+      letter-spacing: 0.5px;
+    }
+    .mobile-menu a:last-child { border: none; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f5ec 50%, #f0f7ff 100%);
+      display: flex; align-items: center; padding: 100px 5% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-circle {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(34,113,184,0.08), transparent 70%);
+    }
+    .hero-bg-circle:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -100px; }
+    .hero-bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(60,179,113,0.1), transparent 70%); }
+    .hero-content { display: flex; align-items: center; gap: 60px; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,113,184,0.1); border: 1px solid rgba(34,113,184,0.2);
+      color: var(--blue); padding: 8px 18px; border-radius: 30px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 24px; animation: fadeInUp 0.8s ease both;
+    }
+    .hero-badge i { font-size: 0.7rem; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; line-height: 1.15; margin-bottom: 20px;
+      animation: fadeInUp 0.8s ease 0.15s both;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-light); line-height: 1.7;
+      margin-bottom: 36px; max-width: 500px;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.45s both; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: white; padding: 15px 32px; border-radius: 50px;
+      font-size: 0.9rem; font-weight: 700; text-decoration: none;
+      box-shadow: 0 8px 30px rgba(34,113,184,0.4);
+      transition: all 0.3s; letter-spacing: 0.5px;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(34,113,184,0.5); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: var(--blue); padding: 15px 32px;
+      border-radius: 50px; font-size: 0.9rem; font-weight: 700;
+      text-decoration: none; border: 2px solid var(--blue-light);
+      transition: all 0.3s; letter-spacing: 0.5px;
+      box-shadow: 0 4px 16px rgba(34,113,184,0.12);
+    }
+    .btn-secondary:hover { background: var(--blue-pale); transform: translateY(-3px); }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 44px;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat strong { display: block; font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-stat span { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; animation: fadeInRight 1s ease 0.3s both; }
+    .hero-logo-wrap {
+      position: relative; width: 320px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-logo-ring {
+      position: absolute; border-radius: 50%; border: 2px dashed;
+      animation: spinSlow 20s linear infinite;
+    }
+    .hero-logo-ring:nth-child(1) { inset: 0; border-color: rgba(34,113,184,0.2); }
+    .hero-logo-ring:nth-child(2) { inset: 20px; border-color: rgba(60,179,113,0.2); animation-direction: reverse; animation-duration: 15s; }
+    .hero-logo-bg {
+      width: 220px; height: 220px; border-radius: 50%;
+      background: white; box-shadow: 0 20px 60px rgba(34,113,184,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-logo-bg img { width: 170px; height: auto; }
+    @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 90px 5%; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 12px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: var(--blue); }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1rem; color: var(--text-light); max-width: 560px; line-height: 1.7; }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+    .text-center .section-label { justify-content: center; }
+    .text-center .section-label::before { display: none; }
+    .text-center .section-label::after { content: ''; width: 24px; height: 2px; background: var(--blue); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; max-width: 1200px; margin: 0 auto; }
+    .about-visual { position: relative; }
+    .about-card-main {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      border-radius: var(--radius-lg); padding: 48px 36px; color: white;
+      position: relative; overflow: hidden;
+    }
+    .about-card-main::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .about-card-main h3 { font-size: 1.5rem; font-family: 'Playfair Display', serif; margin-bottom: 14px; }
+    .about-card-main p { font-size: 0.9rem; opacity: 0.85; line-height: 1.7; }
+    .about-badge-float {
+      position: absolute; bottom: -20px; right: -20px;
+      background: white; border-radius: var(--radius); padding: 16px 22px;
+      box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 14px;
+    }
+    .about-badge-float .ico { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--green), var(--green-dark)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; }
+    .about-badge-float div strong { display: block; font-size: 1.3rem; color: var(--blue-dark); }
+    .about-badge-float div span { font-size: 0.7rem; color: var(--gray); }
+    .about-text { padding-right: 10px; }
+    .about-text h2 { margin-bottom: 20px; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px; border-radius: var(--radius); background: var(--off-white);
+      transition: all 0.3s; border: 1px solid transparent;
+    }
+    .about-feature:hover { background: var(--blue-pale); border-color: var(--blue-light); transform: translateY(-3px); }
+    .about-feature-ico { width: 40px; height: 40px; min-width: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--blue), var(--blue-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
+    .about-feature-txt strong { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 3px; }
+    .about-feature-txt span { font-size: 0.75rem; color: var(--text-light); }
+    .reg-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-pale); color: var(--green-dark);
+      padding: 8px 16px; border-radius: 30px; font-size: 0.78rem; font-weight: 700;
+      margin-top: 28px; border: 1px solid rgba(60,179,113,0.3);
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--gray-light); }
+    .services-header { text-align: center; margin-bottom: 56px; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .service-card {
+      background: white; border-radius: var(--radius-lg); padding: 32px 28px;
+      box-shadow: 0 4px 20px rgba(26,74,124,0.07);
+      transition: all 0.4s cubic-bezier(0.165,0.84,0.44,1);
+      border: 1px solid rgba(34,113,184,0.08);
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(26,74,124,0.16); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-ico {
+      width: 60px; height: 60px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--blue-pale), #c8e8ff);
+      color: var(--blue); transition: all 0.4s;
+    }
+    .service-card:hover .service-ico {
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: white; transform: scale(1.1) rotate(5deg);
+    }
+    .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; color: var(--blue-dark); }
+    .service-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.65; }
+    .service-card .learn-more {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 700; color: var(--blue);
+      margin-top: 16px; text-decoration: none; transition: gap 0.3s;
+    }
+    .service-card:hover .learn-more { gap: 10px; }
+
+    /* ── WHY US ── */
+    #why { background: white; }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; max-width: 1200px; margin: 0 auto; }
+    .why-points { display: flex; flex-direction: column; gap: 22px; }
+    .why-point {
+      display: flex; align-items: flex-start; gap: 18px;
+      padding: 22px 24px; border-radius: var(--radius);
+      border: 1px solid var(--gray-light); transition: all 0.3s;
+      background: white;
+    }
+    .why-point:hover { background: var(--off-white); border-color: var(--blue-light); box-shadow: var(--shadow); transform: translateX(6px); }
+    .why-num {
+      width: 46px; height: 46px; min-width: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 1rem;
+    }
+    .why-point-txt h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+    .why-point-txt p { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+    .why-visual {
+      background: linear-gradient(160deg, var(--blue-dark) 0%, #0d3d6e 40%, var(--green-dark) 100%);
+      border-radius: var(--radius-lg); padding: 50px 40px; color: white;
+      position: relative; overflow: hidden;
+    }
+    .why-visual::after {
+      content: ''; position: absolute; bottom: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .why-visual h3 { font-family: 'Playfair Display', serif; font-size: 1.9rem; margin-bottom: 16px; line-height: 1.3; }
+    .why-visual p { font-size: 0.9rem; opacity: 0.8; line-height: 1.7; margin-bottom: 28px; }
+    .why-visual-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .why-stat { text-align: center; background: rgba(255,255,255,0.1); border-radius: 12px; padding: 18px 12px; backdrop-filter: blur(8px); }
+    .why-stat strong { display: block; font-size: 2rem; font-weight: 800; }
+    .why-stat span { font-size: 0.7rem; opacity: 0.75; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--gray-light); }
+    .gallery-header { text-align: center; margin-bottom: 48px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 16px; max-width: 1100px; margin: 0 auto;
+    }
+    .gallery-item {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .gallery-item:hover { transform: scale(1.03); box-shadow: var(--shadow-lg); z-index: 2; }
+    .gallery-item:nth-child(1) { grid-column: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-card {
+      height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 24px; text-align: center; color: white; position: relative; overflow: hidden;
+    }
+    .gallery-item:nth-child(1) .gallery-card { height: 240px; }
+    .gallery-item:nth-child(4) .gallery-card { height: 240px; }
+    .gc1 { background: linear-gradient(135deg, #1a5f9c, #2271b8); }
+    .gc2 { background: linear-gradient(135deg, #2d7a50, #3cb371); }
+    .gc3 { background: linear-gradient(135deg, #0d3d6e, #1a4a7c); }
+    .gc4 { background: linear-gradient(135deg, #1e6e40, #2d8a4e); }
+    .gc5 { background: linear-gradient(135deg, #4fa3e0, #2271b8); }
+    .gc6 { background: linear-gradient(135deg, #6dca8d, #3cb371); }
+    .gallery-card-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: 0.9; }
+    .gallery-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .gallery-card p { font-size: 0.78rem; opacity: 0.85; }
+    .gallery-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay i { color: white; font-size: 2rem; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: white; }
+    .testimonials-header { text-align: center; margin-bottom: 56px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .testimonial-card {
+      background: var(--off-white); border-radius: var(--radius-lg); padding: 32px;
+      border: 1px solid var(--gray-light); position: relative;
+      transition: all 0.3s; overflow: hidden;
+    }
+    .testimonial-card::before {
+      content: '"'; position: absolute; top: 12px; right: 24px;
+      font-size: 6rem; font-family: 'Playfair Display', serif;
+      color: rgba(34,113,184,0.08); line-height: 1;
+    }
+    .testimonial-card:hover { box-shadow: var(--shadow); transform: translateY(-6px); border-color: var(--blue-light); }
+    .testi-stars { display: flex; gap: 4px; color: #f5a623; margin-bottom: 16px; font-size: 0.85rem; }
+    .testi-text { font-size: 0.88rem; color: var(--text-light); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 14px; }
+    .testi-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: white;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+    }
+    .testi-author-info strong { display: block; font-size: 0.88rem; font-weight: 700; }
+    .testi-author-info span { font-size: 0.75rem; color: var(--gray); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--gray-light); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; align-items: start; }
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info > p { font-size: 0.95rem; color: var(--text-light); line-height: 1.7; margin-bottom: 36px; }
+    .contact-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 22px; background: white; border-radius: var(--radius);
+      box-shadow: 0 2px 12px rgba(26,74,124,0.07);
+      transition: all 0.3s; text-decoration: none; color: var(--text);
+    }
+    .contact-item:hover { box-shadow: var(--shadow); transform: translateX(6px); }
+    .contact-item-ico {
+      width: 46px; height: 46px; min-width: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: white;
+    }
+    .ci-blue { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); }
+    .ci-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
+    .ci-teal { background: linear-gradient(135deg, #17a2b8, #138496); }
+    .ci-orange { background: linear-gradient(135deg, #fd7e14, #e55a00); }
+    .contact-item-txt strong { display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); margin-bottom: 2px; }
+    .contact-item-txt span { font-size: 0.9rem; font-weight: 600; }
+    .map-placeholder {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      border-radius: var(--radius-lg); padding: 44px 36px; color: white;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: ''; position: absolute; top: -50px; right: -50px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .map-icon { font-size: 3.5rem; margin-bottom: 16px; opacity: 0.9; }
+    .map-placeholder h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 12px; }
+    .map-placeholder p { font-size: 0.88rem; opacity: 0.8; line-height: 1.7; margin-bottom: 28px; }
+    .map-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: var(--blue-dark); padding: 14px 28px;
+      border-radius: 50px; font-weight: 700; font-size: 0.88rem;
+      text-decoration: none; transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .map-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+    .schedule-box {
+      background: white; border-radius: var(--radius); padding: 24px;
+      margin-top: 24px; box-shadow: 0 4px 16px rgba(26,74,124,0.08);
+    }
+    .schedule-box h4 { font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin-bottom: 14px; }
+    .schedule-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-light); font-size: 0.85rem; }
+    .schedule-row:last-child { border: none; }
+    .schedule-row span:first-child { color: var(--text-light); font-weight: 500; }
+    .schedule-row span:last-child { font-weight: 700; color: var(--green-dark); }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #0d3d6e 50%, var(--green-dark) 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #cta-final::before, #cta-final::after {
+      content: ''; position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    #cta-final::before { width: 400px; height: 400px; top: -150px; left: -100px; }
+    #cta-final::after { width: 300px; height: 300px; bottom: -100px; right: -50px; }
+    .cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .cta-inner .section-label { color: rgba(255,255,255,0.7); justify-content: center; }
+    .cta-inner .section-label::before, .cta-inner .section-label::after { background: rgba(255,255,255,0.5); }
+    .cta-inner h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); color: white; margin-bottom: 16px; }
+    .cta-inner p { color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.7; margin-bottom: 40px; }
+    .cta-btn-wa {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: #25D366; color: white; padding: 18px 40px;
+      border-radius: 50px; font-size: 1rem; font-weight: 800;
+      text-decoration: none; letter-spacing: 0.5px;
+      box-shadow: 0 10px 40px rgba(37,211,102,0.5);
+      transition: all 0.3s; animation: pulseGreen 3s ease-in-out infinite;
+    }
+    .cta-btn-wa:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 16px 50px rgba(37,211,102,0.6); }
+    .cta-btn-wa i { font-size: 1.3rem; }
+    @keyframes pulseGreen {
+      0%,100% { box-shadow: 0 10px 40px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 10px 60px rgba(37,211,102,0.7); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text); color: rgba(255,255,255,0.75); padding: 56px 5% 28px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .footer-brand img { height: 50px; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand div span:first-child { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; display: block; }
+    .footer-brand div span:last-child { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
+    .footer-desc { font-size: 0.83rem; line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 12px; }
+    .footer-social {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08); color: white; font-size: 0.9rem;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .footer-social:hover { background: var(--blue); transform: translateY(-3px); }
+    footer h5 { color: white; font-size: 0.82rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.83rem; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--blue-light); }
+    .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; flex-wrap: wrap; gap: 10px; }
+    .reg-pill { background: rgba(60,179,113,0.15); color: var(--green-light); padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(60,179,113,0.2); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 1000;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; text-decoration: none;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+      animation: waFloat 3s ease-in-out infinite;
+      transition: transform 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.15); }
+    @keyframes waFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .wa-float-label {
+      position: absolute; right: 72px; background: var(--text); color: white;
+      padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 600;
+      white-space: nowrap; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .wa-float:hover .wa-float-label { opacity: 1; }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeInRight { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-content { flex-direction: column; text-align: center; gap: 40px; }
+      .hero-sub { margin: 0 auto 36px; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-logo-wrap { width: 220px; height: 220px; }
+      .hero-logo-bg { width: 160px; height: 160px; }
+      .hero-logo-bg img { width: 120px; }
+      .about-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-features { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: span 2; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 64px 5%; }
+      .hero-logo-ring { display: none; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: span 1; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <svg class="loader-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="60" cy="30" r="14" fill="white" opacity="0.9"/>
+    <line x1="60" y1="44" x2="60" y2="90" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <line x1="60" y1="62" x2="40" y2="78" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <line x1="60" y1="62" x2="80" y2="78" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <line x1="60" y1="90" x2="42" y2="108" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <line x1="60" y1="90" x2="78" y2="108" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+  <div class="loader-text">FisioMix</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/595993517893" target="_blank" class="wa-float" title="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-float-label">Chateá con nosotros</span>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="FisioMix.jpeg" alt="FisioMix Logo" id="nav-logo-img" />
+    <div class="nav-brand">
+      <span>FisioMix</span>
+      <span>Centro de Rehabilitación</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#why">¿Por qué elegirnos?</a></li>
+    <li><a href="#testimonials">Testimonios</a></li>
+    <li><a href="#contact">Contacto</a></li>
+    <li><a href="https://wa.me/595993517893" target="_blank" class="nav-cta"><i class="fab fa-whatsapp"></i> Agendar Cita</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">Nosotros</a>
+  <a href="#services" onclick="closeMobile()">Servicios</a>
+  <a href="#why" onclick="closeMobile()">¿Por qué elegirnos?</a>
+  <a href="#testimonials" onclick="closeMobile()">Testimonios</a>
+  <a href="#contact" onclick="closeMobile()">Contacto</a>
+  <a href="https://wa.me/595993517893" target="_blank" style="color:var(--green-dark)"><i class="fab fa-whatsapp"></i> Agendar por WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge"><i class="fas fa-shield-halved"></i> Registro Profesional Nº 6722</div>
+      <h1 class="hero-title">
+        Recuperamos tu <span class="highlight">bienestar</span> y mejoramos tu calidad de vida
+      </h1>
+      <p class="hero-sub">Centro de rehabilitación física especializado, con atención personalizada y tecnología moderna para tu recuperación integral.</p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/595993517893" target="_blank" class="btn-primary">
+          <i class="fab fa-whatsapp"></i> Agendar Cita
+        </a>
+        <a href="#services" class="btn-secondary">
+          <i class="fas fa-list-ul"></i> Ver Servicios
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>100%</strong><span>Profesional</span></div>
+        <div class="hero-stat"><strong>11+</strong><span>Servicios</span></div>
+        <div class="hero-stat"><strong>∞</strong><span>Dedicación</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-logo-wrap">
+        <div class="hero-logo-ring"></div>
+        <div class="hero-logo-ring"></div>
+        <div class="hero-logo-bg">
+          <img id="hero-logo-img" src="FisioMix.jpeg" alt="FisioMix – Centro de Rehabilitación" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal-left">
+      <div class="about-card-main">
+        <h3>Lic. Amílcar Cano</h3>
+        <p>Fisioterapeuta profesional comprometido con la recuperación integral de cada paciente, combinando técnicas avanzadas y un enfoque humano único.</p>
+      </div>
+      <div class="about-badge-float">
+        <div class="ico"><i class="fas fa-star"></i></div>
+        <div>
+          <strong>Experto</strong>
+          <span>en Rehabilitación</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="section-label">Sobre Nosotros</div>
+      <h2 class="section-title">Tu salud y recuperación, nuestra misión</h2>
+      <p class="section-sub">FisioMix es un centro de rehabilitación física que combina profesionalismo, tecnología moderna y un trato humano cercano para lograr tu mejor recuperación.</p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-ico"><i class="fas fa-user-doctor"></i></div>
+          <div class="about-feature-txt">
+            <strong>Atención Personalizada</strong>
+            <span>Cada paciente recibe un plan adaptado</span>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-ico"><i class="fas fa-microscope"></i></div>
+          <div class="about-feature-txt">
+            <strong>Tecnología Moderna</strong>
+            <span>Equipos de última generación</span>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-ico"><i class="fas fa-heart-pulse"></i></div>
+          <div class="about-feature-txt">
+            <strong>Compromiso Total</strong>
+            <span>Seguimiento continuo de tu progreso</span>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-ico"><i class="fas fa-shield-heart"></i></div>
+          <div class="about-feature-txt">
+            <strong>Ambiente Seguro</strong>
+            <span>Espacio cómodo y profesional</span>
+          </div>
+        </div>
+      </div>
+      <div class="reg-tag"><i class="fas fa-certificate"></i> Registro Profesional Nº 6722</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-label">Especialidades</div>
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <p class="section-sub">Ofrecemos una amplia gama de tratamientos especializados para tu completa rehabilitación.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-running"></i></div>
+      <h3>Fisioterapia Deportiva</h3>
+      <p>Tratamiento y prevención de lesiones deportivas para que vuelvas a tu máximo rendimiento.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-person-cane"></i></div>
+      <h3>Fisioterapia Geriátrica</h3>
+      <p>Cuidado especializado para adultos mayores, mejorando movilidad y calidad de vida.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-brain"></i></div>
+      <h3>Fisioterapia Neurológica</h3>
+      <p>Rehabilitación de alteraciones del sistema nervioso para recuperar funciones motoras.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-bone"></i></div>
+      <h3>Fisioterapia Traumatológica</h3>
+      <p>Recuperación integral de fracturas, esguinces, luxaciones y cirugías ortopédicas.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-magnet"></i></div>
+      <h3>Magnetoterapia</h3>
+      <p>Uso de campos magnéticos para reducir el dolor, inflamación y acelerar la curación.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-wave-square"></i></div>
+      <h3>Ultrasonido</h3>
+      <p>Terapia con ondas sonoras para tratar tejidos profundos y acelerar la regeneración.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-bolt"></i></div>
+      <h3>Electroterapia</h3>
+      <p>Corrientes eléctricas terapéuticas para aliviar el dolor y estimular la musculatura.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-fire"></i></div>
+      <h3>Termoterapia</h3>
+      <p>Aplicación de calor terapéutico para relajar músculos y mejorar la circulación.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-bandage"></i></div>
+      <h3>Kinesiotaping</h3>
+      <p>Vendaje neuromuscular para dar soporte, reducir el dolor y mejorar el rendimiento.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-hands"></i></div>
+      <h3>Terapia Manual</h3>
+      <p>Técnicas manuales especializadas para movilizar articulaciones y tejidos blandos.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-ico"><i class="fas fa-person-walking"></i></div>
+      <h3>Ejercicios Terapéuticos</h3>
+      <p>Programas de ejercicio personalizado para fortalecer y recuperar el movimiento.</p>
+      <a href="https://wa.me/595993517893" class="learn-more" target="_blank">Consultar <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-grid">
+    <div class="why-points">
+      <div class="section-label reveal">¿Por qué elegirnos?</div>
+      <h2 class="section-title reveal">La diferencia está en la calidad del cuidado</h2>
+      <div class="why-point reveal">
+        <div class="why-num">01</div>
+        <div class="why-point-txt">
+          <h4>Atención 100% Profesional</h4>
+          <p>Lic. Amílcar Cano con registro oficial Nº 6722, garantizando calidad y seguridad en cada tratamiento.</p>
+        </div>
+      </div>
+      <div class="why-point reveal">
+        <div class="why-num">02</div>
+        <div class="why-point-txt">
+          <h4>Equipos Modernos</h4>
+          <p>Tecnología de última generación para diagnósticos y tratamientos más efectivos y precisos.</p>
+        </div>
+      </div>
+      <div class="why-point reveal">
+        <div class="why-num">03</div>
+        <div class="why-point-txt">
+          <h4>Tratamiento Personalizado</h4>
+          <p>Cada paciente es único. Diseñamos planes individuales adaptados a sus necesidades específicas.</p>
+        </div>
+      </div>
+      <div class="why-point reveal">
+        <div class="why-num">04</div>
+        <div class="why-point-txt">
+          <h4>Seguimiento Continuo</h4>
+          <p>Monitoreamos tu progreso en cada sesión para ajustar el tratamiento y optimizar los resultados.</p>
+        </div>
+      </div>
+      <div class="why-point reveal">
+        <div class="why-num">05</div>
+        <div class="why-point-txt">
+          <h4>Ambiente Cómodo y Seguro</h4>
+          <p>Instalaciones limpias, organizadas y pensadas para que te sientas cómodo durante tu rehabilitación.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal-right">
+      <h3>Tu recuperación es nuestra prioridad</h3>
+      <p>En FisioMix trabajamos con dedicación, profesionalismo y tecnología para que recuperes tu bienestar y vuelvas a disfrutar de una vida plena y activa.</p>
+      <div class="why-visual-stats">
+        <div class="why-stat"><strong>11</strong><span>Servicios</span></div>
+        <div class="why-stat"><strong>100%</strong><span>Dedicación</span></div>
+        <div class="why-stat"><strong>✓</strong><span>Certificado</span></div>
+        <div class="why-stat"><strong>❤</strong><span>Con vocación</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <div class="section-label">Nuestro Centro</div>
+    <h2 class="section-title">Experiencia Visual</h2>
+    <p class="section-sub">Conocé nuestro ambiente profesional y los tratamientos que ofrecemos.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc1">
+        <div class="gallery-card-icon"><i class="fas fa-dumbbell"></i></div>
+        <h4>Rehabilitación Física</h4>
+        <p>Programas completos de recuperación</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc2">
+        <div class="gallery-card-icon"><i class="fas fa-hands-holding-heart"></i></div>
+        <h4>Terapia Manual</h4>
+        <p>Técnicas especializadas</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc3">
+        <div class="gallery-card-icon"><i class="fas fa-bolt"></i></div>
+        <h4>Electroterapia</h4>
+        <p>Equipos modernos</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc4">
+        <div class="gallery-card-icon"><i class="fas fa-person-walking"></i></div>
+        <h4>Ejercicios Terapéuticos</h4>
+        <p>Movimiento y recuperación</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc5">
+        <div class="gallery-card-icon"><i class="fas fa-magnet"></i></div>
+        <h4>Magnetoterapia</h4>
+        <p>Tecnología avanzada</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-card gc6">
+        <div class="gallery-card-icon"><i class="fas fa-leaf"></i></div>
+        <h4>Bienestar Integral</h4>
+        <p>Cuidado completo</p>
+        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header reveal">
+    <div class="section-label">Testimonios</div>
+    <h2 class="section-title">Lo que dicen nuestros pacientes</h2>
+    <p class="section-sub">Historias reales de personas que recuperaron su bienestar con nosotros.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Después de mi operación de rodilla pensé que no volvería a caminar bien. El Lic. Amílcar me acompañó en todo el proceso y hoy puedo caminar sin dolor. ¡Increíble profesional!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">MA</div>
+        <div class="testi-author-info">
+          <strong>María Alejandra R.</strong>
+          <span>Rehabilitación de rodilla</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Me trataron la lesión del hombro con kinesiotaping y electroterapia. Muy profesional, siempre explica cada paso del tratamiento. Totalmente recomendado.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">JC</div>
+        <div class="testi-author-info">
+          <strong>José Carlos M.</strong>
+          <span>Lesión de hombro</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Llevé a mi mamá por problemas de movilidad y en pocas semanas mejoró notablemente. Atención excelente, ambiente muy cómodo. ¡Muy recomendable!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">LP</div>
+        <div class="testi-author-info">
+          <strong>Laura P.</strong>
+          <span>Fisioterapia geriátrica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label reveal">Contacto</div>
+      <h2 class="section-title reveal">¿Listo para comenzar tu recuperación?</h2>
+      <p class="reveal">Estamos aquí para ayudarte. Contactanos por WhatsApp o visitanos directamente en nuestro centro.</p>
+      <div class="contact-items">
+        <a href="https://wa.me/595993517893" target="_blank" class="contact-item reveal">
+          <div class="contact-item-ico ci-green"><i class="fab fa-whatsapp"></i></div>
+          <div class="contact-item-txt">
+            <strong>WhatsApp</strong>
+            <span>0993 517 893</span>
+          </div>
+        </a>
+        <a href="tel:+595993517893" class="contact-item reveal">
+          <div class="contact-item-ico ci-blue"><i class="fas fa-phone"></i></div>
+          <div class="contact-item-txt">
+            <strong>Teléfono</strong>
+            <span>0993 517 893</span>
+          </div>
+        </a>
+        <div class="contact-item reveal">
+          <div class="contact-item-ico ci-teal"><i class="fas fa-location-dot"></i></div>
+          <div class="contact-item-txt">
+            <strong>Ubicación</strong>
+            <span>B° Corazón de Jesús, San Juan Nepomuceno</span>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-item-ico ci-orange"><i class="fas fa-id-card"></i></div>
+          <div class="contact-item-txt">
+            <strong>Profesional</strong>
+            <span>Lic. Amílcar Cano – Reg. Nº 6722</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="map-placeholder reveal-right">
+        <div class="map-icon"><i class="fas fa-map-location-dot"></i></div>
+        <h3>Barrio Corazón de Jesús</h3>
+        <p>San Juan Nepomuceno, Paraguay. Nuestro centro está ubicado en una zona accesible y cómoda para vos y tu familia.</p>
+        <a href="https://maps.google.com/?q=San+Juan+Nepomuceno+Paraguay" target="_blank" class="map-btn">
+          <i class="fas fa-map-location-dot"></i> Abrir en Google Maps
+        </a>
+      </div>
+      <div class="schedule-box reveal">
+        <h4><i class="fas fa-clock" style="margin-right:8px;color:var(--blue)"></i>Horario de Atención</h4>
+        <div class="schedule-row">
+          <span>Lunes – Viernes</span>
+          <span>07:00 – 19:00</span>
+        </div>
+        <div class="schedule-row">
+          <span>Sábado</span>
+          <span>07:00 – 12:00</span>
+        </div>
+        <div class="schedule-row">
+          <span>Domingo</span>
+          <span>Previa consulta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-inner reveal">
+    <div class="section-label">Empezá hoy</div>
+    <h2>Tu recuperación comienza hoy</h2>
+    <p>No esperes más para recuperar tu bienestar. Nuestro equipo profesional está listo para ayudarte a volver a moverte, disfrutar y vivir sin dolor.</p>
+    <a href="https://wa.me/595993517893?text=Hola%20FisioMix!%20Quiero%20agendar%20una%20cita." target="_blank" class="cta-btn-wa">
+      <i class="fab fa-whatsapp"></i> Agendar por WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img id="footer-logo-img" src="FisioMix.jpeg" alt="FisioMix" />
+        <div>
+          <span>FisioMix</span>
+          <span>Centro de Rehabilitación</span>
+        </div>
+      </div>
+      <p class="footer-desc">Centro especializado en rehabilitación física, comprometido con tu recuperación y bienestar.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/595993517893" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+595993517893" class="footer-social"><i class="fas fa-phone"></i></a>
+      </div>
+    </div>
+    <div>
+      <h5>Servicios</h5>
+      <div class="footer-links">
+        <a href="#services">Fisioterapia Deportiva</a>
+        <a href="#services">Fisioterapia Geriátrica</a>
+        <a href="#services">Fisioterapia Neurológica</a>
+        <a href="#services">Magnetoterapia</a>
+        <a href="#services">Electroterapia</a>
+        <a href="#services">Kinesiotaping</a>
+      </div>
+    </div>
+    <div>
+      <h5>Contacto</h5>
+      <div class="footer-links">
+        <a href="tel:+595993517893"><i class="fas fa-phone" style="width:16px"></i> 0993 517 893</a>
+        <a href="https://wa.me/595993517893" target="_blank"><i class="fab fa-whatsapp" style="width:16px"></i> WhatsApp</a>
+        <a href="#contact"><i class="fas fa-location-dot" style="width:16px"></i> San Juan Nepomuceno</a>
+        <a href="#contact"><i class="fas fa-clock" style="width:16px"></i> Lun–Vie: 07–19hs</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 FisioMix – Centro de Rehabilitación. Todos los derechos reservados.</span>
+    <span class="reg-pill">Lic. AmIlcar Cano – Reg. Nº 6722</span>
+  </div>
+</footer>
+
+<script>
+  // ── LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hide');
+    }, 1800);
+  });
+
+  // ── NAVBAR scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── HAMBURGER
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // ── SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── STAGGER service cards
+  document.querySelectorAll('.service-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.07}s`;
+  });
+</script>
+</body>
+</html>
